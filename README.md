@@ -102,7 +102,7 @@ while True:
 		break
 ```
 
-# Identical results
+# Check of identity
 
 ```bash
 $ echo -n "The quick brown fox jumps over the lazy dog" | zzuf -r0.04 | hd
