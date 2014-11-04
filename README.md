@@ -119,3 +119,7 @@ $ python -c "import pyZZUF, sys; sys.stdout.write(pyZZUF.pyZZUF('The quick brown
 00000020  68 65 21 6c 61 7a 78 20  66 6f 67                 |he!lazx fog|
 0000002b
 ```
+
+### Notes*
+
+> *Use PyPy for speedup*
