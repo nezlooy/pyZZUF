@@ -87,8 +87,9 @@ gen = obj.mutagen(start=0.0, stop=1, step=0.01)
 while True:
 	try:
 		data = gen.next()
+		seed, ratio, index = data.get_state()
+		
 		if __debug__:
-			seed, ratio, index = data.get_state()
 			print data.tostring().encode('hex'), seed, ratio, index
 
 		if seed == 20:
