@@ -67,7 +67,7 @@ for data in zzuf.mutagen(start=0.0, stop=1, step=0.1):
 
 #### Inheritance of the previous state (meat)
 
-```
+```python
 zzuf = pyZZUF('good')
 
 for data in zzuf.mutagen(start=0.0, stop=1, step=0.1, inheritance=True):
