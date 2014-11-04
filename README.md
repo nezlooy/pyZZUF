@@ -121,6 +121,12 @@ $ python -c "import pyZZUF, sys; sys.stdout.write(pyZZUF.pyZZUF('The quick brown
 0000002b
 ```
 
-### Notes*
+## Installation
+
+```
+pip install pyZZUF
+```
+
+## Notes*
 
 > *Use [PyPy](http://pypy.org/) for speedup*
