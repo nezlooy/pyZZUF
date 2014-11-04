@@ -122,4 +122,4 @@ $ python -c "import pyZZUF, sys; sys.stdout.write(pyZZUF.pyZZUF('The quick brown
 
 ### Notes*
 
-> *Use PyPy for speedup*
+> *Use [PyPy](http://pypy.org/) for speedup*
