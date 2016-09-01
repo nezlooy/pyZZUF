@@ -118,7 +118,7 @@ class pyZZUF(object):
 		self._buf_length = len(buf)
 
 	def set_seed(self, seed):
-		if not isinstance(seed, int):
+		if not isinstance(seed, (int, long)):
 			raise TypeError('<seed> must be int')
 
 		self._seed = uint32(seed)
