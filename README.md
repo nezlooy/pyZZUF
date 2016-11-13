@@ -11,7 +11,7 @@ No more `os.system`, `subprocess.check_output` and `subprocess.Popen` :thumbsup:
 ```python
 from pyZZUF import *
 
-print pyZZUF('good').mutate()
+print (pyZZUF(b'good').mutate().tostring().decode())
 ```
 
 #### Options
@@ -19,7 +19,7 @@ print pyZZUF('good').mutate()
 ```python
 from pyZZUF import *
 
-zzuf = pyZZUF('good')
+zzuf = pyZZUF(b'good')
 
 # Random seed (default 0)
 zzuf.set_seed(9)
@@ -49,18 +49,21 @@ zzuf.set_permitted('!', True)
 # Fuzzing mode <mode> ([xor] set unset)
 zzuf.set_fuzz_mode(FUZZ_MODE_XOR)
 
-print zzuf.mutate()
+print (zzuf.mutate().tostring().decode())
 ```
 
 ### Mutagen
 
 ```python
-zzuf = pyZZUF('good')
+import binascii
+from pyZZUF import *
+
+zzuf = pyZZUF(b'good')
 
 for data in zzuf.mutagen(start=0.0, stop=1, step=0.1):
 	if __debug__:
 		seed, ratio, index = data.get_state()
-		print data.tostring().encode('hex'), seed, ratio, index
+		print (binascii.hexlify(data.tostring()), seed, ratio, index)
 	if data == 'bad!':
 		break
 ```
@@ -68,12 +71,15 @@ for data in zzuf.mutagen(start=0.0, stop=1, step=0.1):
 #### Inheritance of the previous state (meat)
 
 ```python
-zzuf = pyZZUF('good')
+import binascii
+from pyZZUF import *
+
+zzuf = pyZZUF(b'good')
 
 for data in zzuf.mutagen(start=0.0, stop=1, step=0.1, inheritance=True):
 	if __debug__:
 		seed, ratio, index = data.get_state()
-		print data.tostring().encode('hex'), seed, ratio, index
+		print (binascii.hexlify(data.tostring()), seed, ratio, index)
 	if data == 'bad!':
 		break
 ```
@@ -113,7 +119,7 @@ $ echo -n "The quick brown fox jumps over the lazy dog" | zzuf -r0.04 | hd
 00000020  68 65 21 6c 61 7a 78 20  66 6f 67                 |he!lazx fog|
 0000002b
 
-$ python -c "import pyZZUF, sys; sys.stdout.write(pyZZUF.pyZZUF('The quick brown fox jumps over the lazy dog', ratio=0.04).mutate().tostring())" | hd
+$ python -c "import pyZZUF, sys; sys.stdout.write(pyZZUF.pyZZUF(b'The quick brown fox jumps over the lazy dog', ratio=0.04).mutate().tostring().decode())" | hd
 
 00000000  54 68 65 20 71 75 69 63  6b 20 62 72 6f 57 6c 20  |The quick broWl |
 00000010  66 4f 58 20 6a 75 6f 70  73 24 6f 76 75 72 20 74  |fOX juops$ovur t|
