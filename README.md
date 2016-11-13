@@ -87,16 +87,19 @@ for data in zzuf.mutagen(start=0.0, stop=1, step=0.1, inheritance=True):
 ### Stream-generator with restoring state of mutator
 
 ```python
-obj = pyZZUF('good')
+import binascii
+from pyZZUF import *
+
+obj = pyZZUF(b'good')
 gen = obj.mutagen(start=0.0, stop=1, step=0.01)
 
 while True:
 	try:
-		data = gen.next()
+		data = next(gen)
 		seed, ratio, index = data.get_state()
 		
 		if __debug__:
-			print data.tostring().encode('hex'), seed, ratio, index
+			print (binascii.hexlify(data.tostring()), seed, ratio, index)
 
 		if seed == 20:
 			# Set next state of generator (<seed>, <ratio>).

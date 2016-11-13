@@ -15,11 +15,11 @@ from random import randint
 from ctypes import c_double
 
 # Python 2/3 support
-if sys.version_info[0] == 3:
+if sys.version_info[0] == 2:
+	integer_types = (int, long)
+else:
 	xrange = range
 	integer_types = int
-else:
-	integer_types = (int, long)
 
 # A bit of zzuf-magic :/
 ZZUF_MAGIC0 = 0x12345678
