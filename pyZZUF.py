@@ -8,9 +8,18 @@ __status__ = 'Production'
 # Original C-code
 # http://caca.zoy.org/wiki/zzuf
 
+import sys
+
 from array import array
 from random import randint
 from ctypes import c_double
+
+# Python 2/3 support
+if sys.version_info[0] == 3:
+	xrange = range
+	integer_types = int
+else:
+	integer_types = (int, long)
 
 # A bit of zzuf-magic :/
 ZZUF_MAGIC0 = 0x12345678
@@ -70,7 +79,7 @@ class pyZZUFArray(array):
 
 	def __add__(self, other):
 		return self.__str__() + other
-	
+
 	def get_state(self):
 		return self._seed, self._ratio, self._iter
 
@@ -118,7 +127,7 @@ class pyZZUF(object):
 		self._buf_length = len(buf)
 
 	def set_seed(self, seed):
-		if not isinstance(seed, (int, long)):
+		if not isinstance(seed, integer_types):
 			raise TypeError('<seed> must be int')
 
 		self._seed = uint32(seed)
@@ -188,10 +197,10 @@ class pyZZUF(object):
 
 	# Could be better, but do we care?
 	def _zz_rand(self, maxv):
-		hi, lo = self._ctx / 12773L, self._ctx % 12773L
-		x = 16807L * lo - 2836L * hi
+		hi, lo = self._ctx // 12773, self._ctx % 12773
+		x = 16807 * lo - 2836 * hi
 		if x <= 0:
-			x += 0x7fffffffL
+			x += 0x7fffffff
 		self._ctx = x
 		return uint32(self._ctx % maxv)
 
